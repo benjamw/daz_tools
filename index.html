@@ -128,6 +128,7 @@
             <textarea id="list_in" class="form-control"></textarea>
             <button id="open_admin" class="btn btn-sm btn-success">Open in Admin</button>
             <button id="open_store" class="btn btn-sm btn-success">Open in Store</button>
+            <button id="open_readme" class="btn btn-sm btn-success">Open in ReadMe</button>
           </div>
           <div class="form-group col-md-6">
             <label for="list_nl">Newlines:</label>
@@ -260,6 +261,7 @@
         $('#use').text('Using '+ type);
         $('#open_admin').prop('disabled', ('digits' !== output.type));
         $('#open_store').prop('disabled', ('digits' !== output.type));
+        $('#open_readme').prop('disabled', ('digits' !== output.type));
 
         for (idx in output) {
             if (output.hasOwnProperty(idx)) {
@@ -319,6 +321,21 @@
 
         for (idx = 0; idx < len; idx += 1) {
             window.open(url + lists[idx] + '/', '_blank');
+        }
+    });
+
+    $('#open_readme').on('click', function( ) {
+        var idx = 0;
+        var len = lists.length;
+        var url = 'http://docs.daz3d.com/doku.php/group/read_me/staging/%d/start';
+
+        if ($(this).prop('disabled')) {
+            return;
+        }
+
+        for (idx = 0; idx < len; idx += 1) {
+            var thisUrl = url.replace(/%d/img, lists[idx]);
+            window.open(thisUrl, '_blank');
         }
     });
   </script>
