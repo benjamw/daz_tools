@@ -109,6 +109,18 @@
           <textarea id="date_result" class="form-control"></textarea>
         </div>
       </section>
+
+      <h2>HTML</h2>
+
+      <section id="html" class="well">
+        <div class="form-group">
+          <label for="html_input">HTML Input:</label>
+          <textarea id="html_input" class="form-control"></textarea>
+          <button id="copy_html" class="btn btn-sm btn-info copy">Copy</button>
+          <button id="select_html" class="btn btn-sm btn-warning">Select All</button>
+          <button id="open_html" class="btn btn-sm btn-success">Open HTML</button>
+        </div>
+      </section>
     </div>
 
     <div class="col-md-6">
@@ -337,6 +349,16 @@
             var thisUrl = url.replace(/%d/img, lists[idx]);
             window.open(thisUrl, '_blank');
         }
+    });
+
+    $('#select_html').on('click', function( ) {
+        $('#html_input').select( );
+    });
+
+    $('#open_html').on('click', function( ) {
+        var val = $('#html_input').val();
+        var wndw = window.open();
+        wndw.document.write(val);
     });
   </script>
 </div>
