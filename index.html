@@ -104,9 +104,25 @@
             <input type="date" value="1970-01-01" id="date" class="form-control" />
           </div>
         </div>
-        <div class="form-group">
-          <label for="date_result">Result:</label>
-          <textarea id="date_result" class="form-control"></textarea>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="date_result">Result:</label>
+              <textarea id="date_result" class="form-control"></textarea>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="date_result">Date Entered:</label>
+              <textarea id="date_entered" class="form-control"></textarea>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="date_result">Today:</label>
+              <textarea id="date_today" class="form-control"></textarea>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -239,15 +255,20 @@
         days = parseInt(days, 10);
 
         var date = moment(input);
+        if (input === 0) {
+            date = moment();
+            date = moment(date.format('YYYY-MM-DD'));
+        }
 
         date.add(days, 'days');
 
         return [
-            date.format('MM/DD/YYYY'), //
-            date.format('YYYY-MM-DD'), //
-            date.format('dddd, MMMM Do, YYYY'), //
-            date.format('MMMM Do, YYYY'), //
-            date.format('X') // UNIX Timestamp
+            date.format('MM/DD/YYYY'), // 09/12/2017 / US Standard
+            date.format('YYYY-MM-DD'), // 2017-09-12 / Little Endian Standard
+            date.format('dddd, MMMM Do, YYYY'), // Tuesday, September 12th, 2017 / Long
+            date.format('MMMM Do, YYYY'), // September 12th, 2017 / Medium
+            date.format('MMM D, YYYY'), // Sep 12, 2017 / Short
+            date.format('X') // UNIX Timestamp for start of date in local timezone
         ];
     }
 
@@ -256,8 +277,13 @@
         var days = $('#days').val( );
 
         var output = convert_date(date, days);
-
         $('#date_result').val(output.join('\n'));
+
+        output = convert_date(date, 0);
+        $('#date_entered').val(output.join('\n'));
+
+        output = convert_date(0, 0);
+        $('#date_today').val(output.join('\n'));
     }
 
     $("#date").val(moment().format("YYYY-MM-DD"));
